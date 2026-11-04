@@ -68,7 +68,3 @@ If the sensors turn off inside the case, the project will test the same pipeline
 ## ⚖️ Disclaimer
 
 Personal, educational project. Not affiliated with or endorsed by Samsung. Use at your own risk.
-
-## 👤 Author
-
-**Tomás Seabra** — IT Programmer student
