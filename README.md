@@ -51,7 +51,9 @@ If the sensors turn off inside the case, the project will test the same pipeline
   - [x] `buds_proto.py` (framing, CRC16, quaternion decoder) + `phase2_sensors.py` — live quaternion stream confirmed
   - [ ] Test with buds **inside the case** (lid open / closed) while moving it — needs a physical test
   - [ ] Live plot
-- [ ] **Phase 3 — Mouse control:** map motion to X/Y, sensitivity, smoothing, calibration / neutral position, dead zone
+- [~] **Phase 3 — Mouse control:** map motion to X/Y, sensitivity, smoothing, calibration / neutral position, dead zone
+  - [x] `phase3_mouse.py` — relative-rotation → cursor movement with sensitivity, smoothing, dead zone, axis mapping/inversion, `--dry-run` (dx/dy output verified; real cursor movement not yet tuned)
+  - [ ] Tune axes/sensitivity with the buds in the case (needs a physical test)
 - [ ] **Phase 4 — Clicks:** research gestures (tilt, flick, shake) or other mechanisms for left / right / double click and scroll
 - [ ] **Phase 5 — App:** small Windows GUI — on/off, connection status, sensitivity, calibration, axis inversion, gesture toggle
 
@@ -62,6 +64,7 @@ pip install -r requirements.txt
 python phase1_discover.py                      # find the Buds MAC address
 python phase1_rfcomm.py AA:BB:CC:DD:EE:FF      # probe RFCOMM + log raw frames
 python phase2_sensors.py AA:BB:CC:DD:EE:FF --channel 27   # stream head-tracking quaternions
+python phase3_mouse.py AA:BB:CC:DD:EE:FF --dry-run        # preview cursor deltas (drop --dry-run to move the cursor)
 ```
 
 Pair the Buds in Windows first, and disconnect them from the phone / Galaxy Wearable while testing.
