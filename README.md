@@ -44,11 +44,24 @@ If the sensors turn off inside the case, the project will test the same pipeline
 
 ## 🗺️ Roadmap
 
-- [ ] **Phase 1 — Bluetooth:** discover the Buds3 Pro, list services (SPP/RFCOMM + BLE), log raw traffic
+- [~] **Phase 1 — Bluetooth:** discover the Buds3 Pro, list services (SPP/RFCOMM + BLE), log raw traffic
+  - [x] `phase1_discover.py` — lists paired devices + BLE scan (Buds3 Pro found as paired device)
+  - [x] `phase1_rfcomm.py` — probes RFCOMM channels 1–30 and hex-dumps raw traffic to a log (written, **not yet tested against the Buds**)
+  - [ ] Run the RFCOMM probe and analyse which channel/messages the Buds3 Pro uses
 - [ ] **Phase 2 — Sensors:** try to enable head tracking and read gyro/accelerometer data; test in case (lid open / closed); live plot
 - [ ] **Phase 3 — Mouse control:** map motion to X/Y, sensitivity, smoothing, calibration / neutral position, dead zone
 - [ ] **Phase 4 — Clicks:** research gestures (tilt, flick, shake) or other mechanisms for left / right / double click and scroll
 - [ ] **Phase 5 — App:** small Windows GUI — on/off, connection status, sensitivity, calibration, axis inversion, gesture toggle
+
+## ▶️ Usage (Phase 1)
+
+```bash
+pip install -r requirements.txt
+python phase1_discover.py                      # find the Buds MAC address
+python phase1_rfcomm.py AA:BB:CC:DD:EE:FF      # probe RFCOMM + log raw frames
+```
+
+Pair the Buds in Windows first, and disconnect them from the phone / Galaxy Wearable while testing.
 
 ## 🧰 Planned stack
 
