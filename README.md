@@ -30,11 +30,11 @@ This project is honest about what is known and what is not. Nothing below is ass
 |---|---|
 | Galaxy Buds use a proprietary binary protocol over **Bluetooth Classic SPP/RFCOMM** (not BLE GATT) | ✅ Confirmed by community reverse engineering (GalaxyBudsClient) |
 | Older models (Buds Pro) stream gyroscope / head-tracking data over that protocol (`SPATIAL_AUDIO_DATA` messages) | ✅ Confirmed for Buds Pro (BudsPro-Headtracking project) |
-| Buds3 Pro uses the same / compatible messages | ❓ Needs testing |
+| Buds3 Pro uses the same / compatible messages | ✅ Confirmed — same `FD … DD` framing; head-tracking (`SET_SPATIAL_AUDIO` + `SPATIAL_AUDIO_CONTROL Attach`) streams quaternions on **RFCOMM channel 27** from Python |
 | Sensors stay active while the earbuds are **in the case** | ❓ Needs testing — earbuds normally detect the case and switch to charging, which may disable sensors and the Bluetooth link |
 | Works with the **lid closed** | ❓ Unlikely — the earbuds usually disconnect when the lid closes |
 | The case itself exposes motion data | ❌ No evidence the case has a motion sensor or its own data link |
-| Head-tracking can be enabled without the Galaxy Wearable app | ❓ Needs testing |
+| Head-tracking can be enabled without the Galaxy Wearable app | ✅ Confirmed — enabled directly from `phase2_sensors.py` |
 
 > ⚠️ **Note on Bleak:** Bleak only speaks **BLE**. Since the Buds' control protocol runs over **RFCOMM**, the plan is to use Python's built-in `socket` (`AF_BLUETOOTH` / `BTPROTO_RFCOMM`, supported on Windows) instead. Bleak may still be used for scanning / exploring BLE advertisements.
 
@@ -44,11 +44,13 @@ If the sensors turn off inside the case, the project will test the same pipeline
 
 ## 🗺️ Roadmap
 
-- [~] **Phase 1 — Bluetooth:** discover the Buds3 Pro, list services (SPP/RFCOMM + BLE), log raw traffic
+- [x] **Phase 1 — Bluetooth:** discover the Buds3 Pro, list services (SPP/RFCOMM + BLE), log raw traffic
   - [x] `phase1_discover.py` — lists paired devices + BLE scan (Buds3 Pro found as paired device)
-  - [x] `phase1_rfcomm.py` — probes RFCOMM channels 1–30 and hex-dumps raw traffic to a log (written, **not yet tested against the Buds**)
-  - [ ] Run the RFCOMM probe and analyse which channel/messages the Buds3 Pro uses
-- [ ] **Phase 2 — Sensors:** try to enable head tracking and read gyro/accelerometer data; test in case (lid open / closed); live plot
+  - [x] `phase1_rfcomm.py` — probes RFCOMM channels 1–30 and hex-dumps raw traffic. Result: channels 20 and 27 speak the Samsung protocol; **27 accepts head-tracking commands**
+- [~] **Phase 2 — Sensors:** try to enable head tracking and read gyro/accelerometer data; test in case (lid open / closed); live plot
+  - [x] `buds_proto.py` (framing, CRC16, quaternion decoder) + `phase2_sensors.py` — live quaternion stream confirmed
+  - [ ] Test with buds **inside the case** (lid open / closed) while moving it — needs a physical test
+  - [ ] Live plot
 - [ ] **Phase 3 — Mouse control:** map motion to X/Y, sensitivity, smoothing, calibration / neutral position, dead zone
 - [ ] **Phase 4 — Clicks:** research gestures (tilt, flick, shake) or other mechanisms for left / right / double click and scroll
 - [ ] **Phase 5 — App:** small Windows GUI — on/off, connection status, sensitivity, calibration, axis inversion, gesture toggle
@@ -59,6 +61,7 @@ If the sensors turn off inside the case, the project will test the same pipeline
 pip install -r requirements.txt
 python phase1_discover.py                      # find the Buds MAC address
 python phase1_rfcomm.py AA:BB:CC:DD:EE:FF      # probe RFCOMM + log raw frames
+python phase2_sensors.py AA:BB:CC:DD:EE:FF --channel 27   # stream head-tracking quaternions
 ```
 
 Pair the Buds in Windows first, and disconnect them from the phone / Galaxy Wearable while testing.
