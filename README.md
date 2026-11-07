@@ -87,3 +87,9 @@ Pair the Buds in Windows first, and disconnect them from the phone / Galaxy Wear
 ## ⚖️ Disclaimer
 
 Personal, educational project. Not affiliated with or endorsed by Samsung. Use at your own risk.
+
+## 🛠️ Troubleshooting
+
+- **`WinError 10064` on every channel:** the Buds are not reachable — open the case lid / take a bud out and make sure they are paired.
+- **`WinError 10048`:** another app (Galaxy Wearable, a phone) is holding the channel.
+- **Connection closes right away:** channel is not the Samsung control channel; use `--channel 27`.
