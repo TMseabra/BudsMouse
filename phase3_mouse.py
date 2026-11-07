@@ -9,7 +9,7 @@ Usage:
     python phase3_mouse.py MAC --dry-run          # print dx,dy only
     python phase3_mouse.py MAC --sens 900 --invert-x
     python phase3_mouse.py MAC --x-axis 2 --y-axis 1   # axes: 0=x 1=y 2=z of rotation vector
-Stop with Ctrl+C. Slam the real mouse into a corner? Not needed - just Ctrl+C.
+Stop with Ctrl+C. The cursor is moved with the Win32 mouse_event call (no extra packages).
 """
 import argparse
 import ctypes
