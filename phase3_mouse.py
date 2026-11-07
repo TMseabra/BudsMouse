@@ -87,7 +87,7 @@ def main():
     last_ka = time.time()
     try:
         while True:
-            if time.time() - last_ka > 2:
+            if time.time() - last_ka > bp.KEEPALIVE_SECONDS:
                 s.send(bp.build(bp.MSG_SPATIAL_AUDIO_CONTROL, bytes([bp.CTRL_KEEPALIVE])))
                 last_ka = time.time()
             try:
