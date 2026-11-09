@@ -77,6 +77,12 @@ Pair the Buds in Windows first, and disconnect them from the phone / Galaxy Wear
 - `matplotlib` for live sensor plots
 - `tkinter` / `customtkinter` for the GUI
 
+## 📖 More docs
+
+- [Protocol notes](docs/protocol.md)
+- [Message IDs](docs/messages.md)
+- [Physical test checklist](docs/testing.md)
+
 ## 📚 References
 
 - [GalaxyBudsClient](https://github.com/timschneeb/GalaxyBudsClient) — unofficial Galaxy Buds manager, protocol reverse engineering
