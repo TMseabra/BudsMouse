@@ -1,5 +1,7 @@
 """Phase 1b - probe RFCOMM channels on the Buds and log raw traffic.
 
+Tip: on the Buds3 Pro, channels 20 and 27 speak the Samsung protocol (27 for head-tracking).
+
 Windows needs an explicit RFCOMM channel number, so this tries channels
 1..30 until one connects, then hex-dumps everything received into a log file.
 
