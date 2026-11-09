@@ -5,3 +5,6 @@ Frame: `FD | size(2, LE) | msg_id | payload | crc16(2, LE) | DD`
 - CRC16-CCITT (XModem, poly 0x1021, init 0) over `msg_id + payload`.
 
 RFCOMM channels observed on Windows: 20 and 27 answer with Samsung frames; 27 accepts head-tracking.
+
+## Keep-alive
+The Buds stop streaming head-tracking unless `SPATIAL_AUDIO_CONTROL` / `KeepAlive (4)` is sent about every 2 seconds.
