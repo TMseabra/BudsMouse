@@ -3,11 +3,11 @@
 Usage:
     python phase2_sensors.py 2C:DA:46:8A:4D:A2 --channel 20
     python phase2_sensors.py MAC --seconds 30 --log sensors.log
-Try: buds in case (lid open), buds in case (lid closed), buds outside.
+See docs/testing.md for the test order (outside, case open, case closed).
 """
 import argparse
 import socket
-import time
+import time  # keep-alive timing
 
 import buds_proto as bp
 
